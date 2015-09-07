@@ -35,3 +35,15 @@ Perl6 に依存して実装されているわけではなく、汎用のプロ�
 time perl6-m -e '0'
 perl6-m -e '0'  0.08s user 0.02s system 97% cpu 0.098 total
 ```
+
+## Perl6 が出たら　Perl5 は廃れてしまうの？
+既存のコードベースが大量にありますので、そんなことにはならないでしょう。
+Perl6 がリリースされても Perl5 のメンテナンスは継続されます。
+
+## MoarVM ってなに？
+
+[MoarVM](https://github.com/MoarVM/MoarVM) とは、Perl6 をターゲットに開発された VM です。JIT なども積んでおり、高速に安定して動作します。
+
+## Parrot ってどうなったの？
+Parrot はもはや Rakudo のメインターゲットではありません。MoarVM をご利用ください。
+
