@@ -5,7 +5,7 @@ Perl6を用いたコード例の日本語コメント付きのものです。
 
 ### Perl6 の仕様はどこ？
 
-https://github.com/perl6/specs/
+[Perl6 Design Documents](https://github.com/perl6/specs/)　を参考にしてください。
 
 ## Perl6 の実装はどこ？
 
