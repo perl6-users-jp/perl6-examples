@@ -50,3 +50,7 @@ Parrot はもはや Rakudo のメインターゲットではありません。Mo
 ## Perl6 のバグを発見したのだけど？
 
 https://rt.perl.org/Public/ ←　が  BTS です。
+
+## export された method の実態を取りたいのですが
+
+Perl5 で言うところの `__PACKAGE__->can("done_testing")` は `&::('done_testing')` で実現できます。
