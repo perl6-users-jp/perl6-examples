@@ -54,3 +54,14 @@ https://rt.perl.org/Public/ ←　が  BTS です。
 ## export された method の実態を取りたいのですが
 
 Perl5 で言うところの `__PACKAGE__->can("done_testing")` は `&::('done_testing')` で実現できます。
+
+## REPL が使いづらいのですが
+
+    panda install Linenoise
+
+するとまともになります｡
+
+## CPAN みたいなものはありますか?
+
+panda というのがそれです｡
+
