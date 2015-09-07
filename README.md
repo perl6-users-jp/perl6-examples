@@ -5,7 +5,11 @@ Perl6を用いたコード例の日本語コメント付きのものです。
 
 ### Perl6 の仕様はどこ？
 
-[Perl6 Design Documents](https://github.com/perl6/specs/)　を参考にしてください。
+[Perl6 Design Documents](https://github.com/perl6/specs/)　が仕様になっています。
+
+### 入門ドキュメントとかあるの？
+
+[Using Perl6(日本語版)](https://dl.dropboxusercontent.com/u/877032/UsingPerl6_JA.html) を読んでみるとよいかもしれません。
 
 ## Perl6 の実装はどこ？
 
