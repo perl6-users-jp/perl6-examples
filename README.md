@@ -47,3 +47,6 @@ Perl6 がリリースされても Perl5 のメンテナンスは継続されま�
 ## Parrot ってどうなったの？
 Parrot はもはや Rakudo のメインターゲットではありません。MoarVM をご利用ください。
 
+## Perl6 のバグを発見したのだけど？
+
+https://rt.perl.org/Public/ ←　が  BTS です。
