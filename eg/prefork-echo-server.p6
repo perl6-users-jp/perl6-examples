@@ -1,6 +1,9 @@
 use v6;
 use NativeCall;
 
+# prefork の echoserver を無理やり実装してみた例｡
+# THIS IS JOKE.
+
 constant $SOCK_STREAM = 1;
 constant $AF_INET = 2;
 
