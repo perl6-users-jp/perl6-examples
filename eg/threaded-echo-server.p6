@@ -4,10 +4,10 @@ use NativeCall;
 # threaded の echoserver を無理やり実装してみた例｡
 # THIS IS JOKE.
 
-constant $SOCK_STREAM = 1;
-constant $AF_INET = 2;
+constant SOCK_STREAM = 1;
+constant AF_INET = 2;
 
-constant $INADDR_ANY = 0;
+constant INADDR_ANY = 0;
 
 sub fork () returns Int is native { ... }
 
@@ -141,7 +141,6 @@ class Raw::Socket::INET {
             die "cannot bind";
         }
     }
-
     method listen($backlog) {
         if (listen($!fd, 20) != 0 ) {
             die "cannot listen";

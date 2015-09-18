@@ -65,3 +65,18 @@ Perl5 で言うところの `__PACKAGE__->can("done_testing")` は `&::('done_te
 
 panda というのがそれです｡
 
+## 起動が遅いのですが?
+
+Moar の場合、--stagestats オプションでどのステージで時間がかかっているか確認することができます。
+
+    $ perl6-m --stagestats -Ilib bin/crustup
+    Stage start      :   0.000
+    Stage parse      :   8.409
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.003
+    Stage mast       :   0.019
+    Stage mbc        :   0.001
+    Stage moar       :   0.000
+    Usage:
+      bin/crustup [--port=<Int>] [--shotgun] [--workers=<Int>] <appfile> [<host>]
