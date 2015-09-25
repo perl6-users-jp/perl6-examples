@@ -80,3 +80,18 @@ Moar の場合、--stagestats オプションでどのステージで時間が�
     Stage moar       :   0.000
     Usage:
       bin/crustup [--port=<Int>] [--shotgun] [--workers=<Int>] <appfile> [<host>]
+
+## perl6-jvm の起動遅すぎませんか?
+
+eval-server ついてるのでご利用ください。
+
+    ./install/bin/perl6-eval-server -cookie TESTTOKEN -app ./perl6.jar
+
+でサーバー起動。
+
+    ./install/bin/eval-client.pl TESTTOKEN 'run' '-e' 'say 4'
+
+でクライアント走ります。
+
+
+
