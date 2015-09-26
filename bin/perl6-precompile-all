@@ -1,0 +1,75 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use utf8;
+use 5.010000;
+use autodie;
+
+use File::Find;
+use Getopt::Long;
+use File::Spec;
+use File::Temp;
+use Capture::Tiny qw/capture_merged/;
+
+my $perl6 = 'perl6-m';
+GetOptions(
+    'perl6=s' => \$perl6
+);
+
+my $fh = File::Temp->new;
+print {$fh} '@*INC ==> grep /site\/lib/ ==> map { .subst(/^file\#/, "").print }';
+$fh->flush;
+
+my $sitelib = qx!$perl6 @{[$fh->filename]}!;
+$sitelib or die "cannot get site lib";
+
+chdir $sitelib or die "chdir failed: $sitelib:$!";
+
+my %after;
+
+find({
+    wanted => sub {
+        return 1 unless -f $_;
+        return 1 unless /\.pm6?\z/;
+        precompile(File::Spec->rel2abs($_));
+        return 1;
+    },
+    no_chdir => 1,
+}, '.');
+
+while (%after) {
+    for my $file (keys %after) {
+        delete $after{$file} if precompile($file);
+    }
+}
+
+sub precompile {
+    my $file = shift @_;
+
+    my $comptarget='mbc';
+    my $compext='moarvm';
+    my $output = "$file.${compext}";
+    if (-e $output) {
+        print "exists $output. skip\n";
+        return 1;
+    }
+
+    my @cmd = ($perl6, "--target=$comptarget", "--output=${output}", $file);
+    print "@cmd\n";
+    my $retval = 1;
+    my $out = capture_merged {
+        $retval = system(@cmd);
+    };
+    if ($out =~ /When pre-compiling a module, its dependencies must be pre-compiled first./) {
+        $after{$file}++;
+        return 0; # fail
+    } else {
+        print $out;
+    }
+    if ($retval==0) {
+        return 1; # succeeded
+    } else {
+        return 0;
+    }
+}
+
