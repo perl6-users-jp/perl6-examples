@@ -49,8 +49,10 @@ sub precompile {
     my $comptarget='mbc';
     my $compext='moarvm';
     my $output = "$file.${compext}";
-    if (-e $output) {
-        print "exists $output. skip\n";
+    my $file_mtime = (stat $file)[9];
+    my $output_mtime = -e $output ? (stat $output)[9] : 0;
+    if ($file_mtime <= $output_mtime) {
+        print "up to date $output. skip\n";
         return 1;
     }
 
