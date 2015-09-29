@@ -101,3 +101,4 @@ precompile とはつまり､.pm ファイルを .moarvm ファイルにコン�
 Perl6 は開発途中のため､このあたりがまだ手薄です｡
 
 https://github.com/perl6-users-jp/perl6-examples/blob/master/bin/perl6-precompile-all を実行するととりあえず全部 precompile するので､速くなります｡
+
