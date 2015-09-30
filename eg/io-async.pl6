@@ -3,7 +3,6 @@ use v6;
 say 'start';
 
 react {
-    my %e;
     whenever IO::Socket::Async.listen('localhost', 3000) -> $conn {
         $conn.bytes-supply.tap(
             -> $buf {
