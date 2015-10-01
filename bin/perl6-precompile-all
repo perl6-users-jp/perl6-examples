@@ -37,12 +37,6 @@ find({
     no_chdir => 1,
 }, '.');
 
-while (%after) {
-    for my $file (keys %after) {
-        delete $after{$file} if precompile($file);
-    }
-}
-
 sub precompile {
     my $file = shift @_;
 
@@ -62,16 +56,12 @@ sub precompile {
     my $out = capture_merged {
         $retval = system(@cmd);
     };
-    if ($out =~ /When pre-compiling a module, its dependencies must be pre-compiled first./) {
-        $after{$file}++;
-        return 0; # fail
+    if ($out =~ /Please pre-compile (.*)$/m) {
+        print "$1 is required\n";
+        precompile($1); # recompile deps
+        precompile($file); # try it again
     } else {
         print $out;
-    }
-    if ($retval==0) {
-        return 1; # succeeded
-    } else {
-        return 0;
     }
 }
 
