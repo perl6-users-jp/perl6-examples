@@ -38,9 +38,11 @@ find({
 }, '.');
 
 while (%after) {
+    my $done = 0;
     for my $file (keys %after) {
-        delete $after{$file} if precompile($file);
+        delete $after{$file} && $done++ if precompile($file);
     }
+    last unless $done;
 }
 
 sub precompile {
