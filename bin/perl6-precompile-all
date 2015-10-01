@@ -9,7 +9,6 @@ use File::Find;
 use Getopt::Long;
 use File::Spec;
 use File::Temp;
-use Capture::Tiny qw/capture_merged/;
 
 my $perl6 = 'perl6-m';
 GetOptions(
@@ -52,10 +51,8 @@ sub precompile {
 
     my @cmd = ($perl6, "--target=$comptarget", "--output=${output}", $file);
     print "@cmd\n";
-    my $retval = 1;
-    my $out = capture_merged {
-        $retval = system(@cmd);
-    };
+    my $out = `@cmd 2>&1`;
+    my $retval = $?;
     if ($out =~ /Please pre-compile (.*)$/m) {
         print "$1 is required\n";
         precompile($1); # recompile deps
