@@ -106,3 +106,7 @@ https://github.com/perl6-users-jp/perl6-examples/blob/master/bin/perl6-precompil
 
 https://github.com/shoichikaji/mi6 があります。モジュール作るときはこれ使うのがおすすめです。
 
+## `Class::Load::load_class($klass)` みたいなのどうやって実装したらいいんですか?
+
+    require ::($module_name);
+    ::($module_name).new;
