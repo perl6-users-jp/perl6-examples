@@ -110,3 +110,13 @@ https://github.com/shoichikaji/mi6 があります。モジュール作るとき
 
     require ::($module_name);
     ::($module_name).new;
+
+## rakudo ビルドが途中で止まるのですが
+
+    Stage mbc        : Killed
+
+などと出ていませんか?
+
+現状の rakudo のビルドでは OOM が走ってしまうことがあります。
+
+OOM が走る場合にはメモリを増やしてください。
