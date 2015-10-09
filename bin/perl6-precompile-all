@@ -15,27 +15,59 @@ GetOptions(
     'perl6=s' => \$perl6
 );
 
-my $fh = File::Temp->new;
-print {$fh} '@*INC ==> grep /site\/lib/ ==> map { .subst(/^file\#/, "").print }';
-$fh->flush;
+my $prefix = prefix();
+my $sitelib = "$prefix/share/perl6/site/lib/";
 
-my $sitelib = qx!$perl6 @{[$fh->filename]}!;
-$sitelib or die "cannot get site lib";
+&compile_all;
 
-chdir $sitelib or die "chdir failed: $sitelib:$!";
+sub debugf {
+    my ($fmt, @p) = @_;
+    print STDERR sprintf($fmt, @p) . "\n" if $ENV{DEBUG};
+}
 
-find({
-    wanted => sub {
-        return 1 unless -f $_;
-        return 1 unless /\.pm6?\z/;
-        precompile(File::Spec->rel2abs($_));
-        return 1;
-    },
-    no_chdir => 1,
-}, '.');
+sub compile_all {
+
+    find({
+        wanted => sub {
+            return 1 unless -f $_;
+            return 1 unless /\.pm6?\z/;
+            precompile(File::Spec->rel2abs($_));
+            return 1;
+        },
+        no_chdir => 1,
+    }, $sitelib);
+}
+
+sub prefix {
+    my $V = qx!$perl6 -V!;
+    $V =~ /moar::prefix=(.*)/ or die "invalid output: $V";
+    $1;
+}
+
+sub precompile_module {
+    my $pkg = shift;
+    state %seen;
+    return if $seen{$pkg}++;
+
+    $pkg =~ s!::!/!g;
+    for my $suffix (qw(.pm .pm6)) {
+        my $path = "$sitelib/$pkg$suffix";
+        if (-f $path) {
+            debugf("precompile target found: $pkg");
+            precompile($path);
+            last;
+        }
+    }
+}
 
 sub precompile {
     my $file = shift @_;
+    $file = File::Spec->canonpath($file);
+
+    state %seen;
+    return if $seen{$file};
+
+    scan_use($file);
 
     my $comptarget='mbc';
     my $compext='moarvm';
@@ -56,7 +88,19 @@ sub precompile {
         precompile($1); # recompile deps
         precompile($file); # try it again
     } else {
+        $seen{$file}++;
         print $out;
+    }
+}
+
+sub scan_use {
+    my $file = shift;
+    open my $fh, '<', $file;
+    while (<$fh>) {
+        if (/use\s+([^;]+)/) {
+            next if $1 eq 'v6';
+            precompile_module($1);
+        }
     }
 }
 
