@@ -24,8 +24,6 @@ $sitelib or die "cannot get site lib";
 
 chdir $sitelib or die "chdir failed: $sitelib:$!";
 
-my %after;
-
 find({
     wanted => sub {
         return 1 unless -f $_;
