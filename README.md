@@ -120,3 +120,10 @@ https://github.com/shoichikaji/mi6 があります。モジュール作るとき
 現状の rakudo のビルドでは OOM が走ってしまうことがあります。
 
 OOM が走る場合にはメモリを増やしてください。
+
+## B::Deparse や B::Terse のようなものはありますか?
+
+    perl6 --target=ast -e 'my @a = $_.split(/\s/)'
+
+のようにすると､良い感じに動くようになります｡
+
