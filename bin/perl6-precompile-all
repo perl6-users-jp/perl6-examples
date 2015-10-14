@@ -97,7 +97,7 @@ sub scan_use {
     my $file = shift;
     open my $fh, '<', $file;
     while (<$fh>) {
-        if (/use\s+([^;]+)/) {
+        if (/use\s+([^;\n]+)/) {
             next if $1 eq 'v6';
             precompile_module($1);
         }
