@@ -133,3 +133,13 @@ OOM が走る場合にはメモリを増やしてください。
 perl6 の実行オプションに `--stagestats` や `--ll-exceptions` を付与して実行してみるのも手です．
 
 また `strace` を使ってシステムコールを見るというのも選択肢の一つとなるでしょう．
+
+## Rakudo のデバッグ・開発をしたいのですが？
+
+```
+cd /path/to/MoarVM && perl Configure.pl --prefix=/tmp/perl6/ --make-install
+cd /path/to/nqp && perl Configure.pl --prefix=/tmp/perl6/ --backends=moar --make-install
+cd /path/to/rakudo && perl --prefix=/tmp/perl6/ --backends=moar --make-install
+```
+
+などとして，rakudo をビルドしつつ開発をすることが可能です．
