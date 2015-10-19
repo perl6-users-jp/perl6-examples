@@ -143,3 +143,8 @@ cd /path/to/rakudo && perl Configure.pl --prefix=/tmp/perl6/ --backends=moar --m
 ```
 
 などとして，rakudo をビルドしつつ開発をすることが可能です．
+
+## `sub import` を利用した DSL を記述したいのですが
+`sub EXPORT` を利用してください。
+
+http://doc.perl6.org/language/modules#EXPORT
